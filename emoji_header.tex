@@ -1,0 +1,70 @@
+% ── Fonts ────────────────────────────────────────────────────────────────────
+\usepackage{fontspec}
+\directlua{
+  luaotfload.add_fallback(
+    "emojifallback",
+    {"Noto Color Emoji:mode=harf;"}
+  )
+}
+\setmainfont{TeX Gyre Heros}[RawFeature={fallback=emojifallback}]
+\setsansfont{TeX Gyre Heros}
+\setmonofont{TeX Gyre Cursor}
+
+% ── Page layout ──────────────────────────────────────────────────────────────
+\usepackage{geometry}
+\geometry{margin=1.2in}
+
+% ── Colors ───────────────────────────────────────────────────────────────────
+\usepackage{xcolor}
+\definecolor{ghtext}{HTML}{1F2328}
+\definecolor{ghlink}{HTML}{0969da}
+\definecolor{ghcodebg}{HTML}{f6f8fa}
+\definecolor{ghborder}{HTML}{d0d7de}
+\definecolor{ghquote}{HTML}{636c76}
+\colorlet{shadecolor}{ghcodebg}
+
+% ── Typography ───────────────────────────────────────────────────────────────
+\usepackage{microtype}
+\usepackage{setspace}
+\setstretch{1.5}
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{8pt plus 2pt minus 1pt}
+\AtBeginDocument{\color{ghtext}}
+
+% ── Headings ─────────────────────────────────────────────────────────────────
+\usepackage{titlesec}
+\titleformat{\section}{\LARGE\bfseries}{}{0em}{}[{\color{ghborder}\titlerule}]
+\titleformat{\subsection}{\Large\bfseries}{}{0em}{}[{\color{ghborder}\titlerule}]
+\titleformat{\subsubsection}{\large\bfseries}{}{0em}{}
+\titleformat{\paragraph}{\normalsize\bfseries}{}{0em}{}
+\titlespacing*{\section}{0pt}{24pt plus 4pt}{8pt plus 2pt}
+\titlespacing*{\subsection}{0pt}{20pt plus 4pt}{6pt plus 2pt}
+\titlespacing*{\subsubsection}{0pt}{16pt plus 4pt}{4pt plus 2pt}
+
+% ── Links ────────────────────────────────────────────────────────────────────
+\AtBeginDocument{\hypersetup{
+  colorlinks=true,
+  linkcolor={ghlink},
+  urlcolor={ghlink},
+  citecolor={ghlink}
+}}
+
+% ── Code blocks ──────────────────────────────────────────────────────────────
+\usepackage{fvextra}
+\fvset{breaklines=true, fontsize=\small}
+
+% ── Blockquotes ──────────────────────────────────────────────────────────────
+\usepackage{mdframed}
+\renewenvironment{quote}{
+  \begin{mdframed}[
+    leftline=true, rightline=false, topline=false, bottomline=false,
+    linewidth=4pt, linecolor=ghborder,
+    innerleftmargin=12pt, innerrightmargin=0pt,
+    innertopmargin=4pt, innerbottommargin=4pt,
+    backgroundcolor=white
+  ]\color{ghquote}
+}{\end{mdframed}}
+
+% ── Overflow prevention ──────────────────────────────────────────────────────
+\setlength{\emergencystretch}{3em}
+\PassOptionsToPackage{hyphens}{url}

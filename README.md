@@ -1,4 +1,4 @@
-# folio-md
+# folio-md-to-pdf
 
 Convert Markdown files to PDF via a Docker container running Pandoc + LuaLaTeX.
 

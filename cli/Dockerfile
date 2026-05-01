@@ -8,7 +8,7 @@ RUN tlmgr install tex-gyre \
     && luaotfload-tool -u
 
 COPY style.tex /style.tex
-COPY entrypoint.sh /entrypoint.sh
+COPY cli/entrypoint.sh /entrypoint.sh
 RUN chmod +x /entrypoint.sh
 
 RUN useradd --create-home --shell /bin/sh appuser

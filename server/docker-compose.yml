@@ -1,0 +1,10 @@
+services:
+  server:
+    build:
+      context: ..
+      dockerfile: server/Dockerfile
+    ports:
+      - "8080:8080"
+    volumes:
+      - ./server.py:/app/server.py
+    command: uv run -- uvicorn server:app --host 0.0.0.0 --port 8080 --reload

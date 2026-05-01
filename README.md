@@ -68,7 +68,7 @@ MIT — see [LICENSE](LICENSE).
 
 - `Dockerfile` — extends `pandoc/extra` with Noto Color Emoji fonts and the TeX Gyre font family
 - `convert.sh` — mounts the input file's directory and the repo directory into the container, then runs Pandoc with `lualatex` as the PDF engine
-- `emoji_header.tex` — LaTeX preamble injected at build time; configures fonts, page layout, colors, typography, headings, links, code blocks, and blockquotes
+- `style.tex` — LaTeX preamble injected at build time; configures fonts, page layout, colors, typography, headings, links, code blocks, and blockquotes
 
 ```
 

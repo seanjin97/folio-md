@@ -16,5 +16,5 @@ docker run --rm \
   folio-md:latest \
   "/data/${BASENAME}" \
   --pdf-engine=lualatex \
-  -H /scripts/emoji_header.tex \
+  -H /scripts/style.tex \
   -o "/data/${FILENAME}.pdf"

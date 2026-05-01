@@ -7,5 +7,11 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
 RUN tlmgr install tex-gyre \
     && luaotfload-tool -u
 
+COPY style.tex /style.tex
+COPY entrypoint.sh /entrypoint.sh
+RUN chmod +x /entrypoint.sh
+
 RUN useradd --create-home --shell /bin/sh appuser
 USER appuser
+
+ENTRYPOINT ["/entrypoint.sh"]

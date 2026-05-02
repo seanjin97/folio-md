@@ -2,12 +2,11 @@
   "name": "folio-md server",
   "dockerComposeFile": "../server/docker-compose.yml",
   "service": "server",
-  "workspaceFolder": "/app",
+  "workspaceFolder": "/src",
   "customizations": {
     "vscode": {
       "extensions": [
-        "ms-python.python",
-        "ms-python.pylance"
+        "golang.go"
       ]
     }
   }

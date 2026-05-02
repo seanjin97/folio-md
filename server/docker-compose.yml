@@ -3,8 +3,8 @@ services:
     build:
       context: ..
       dockerfile: server/Dockerfile
+      target: dev
     ports:
-      - "8080:8080"
+      - "8081:8081"
     volumes:
-      - ./server.py:/app/server.py
-    command: uv run -- uvicorn server:app --host 0.0.0.0 --port 8080 --reload
+      - .:/src

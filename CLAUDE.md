@@ -38,9 +38,11 @@ docker run --rm -v "$(pwd):/data" folio-md test/test.md
 ```sh
 cd server
 docker compose up --build
-# POST http://localhost:8080/convert  (multipart: file=<input.md>)
+# POST http://localhost:8081/convert  (multipart: file=<input.md>)
 # Response: PDF binary
 ```
+
+Hot reload is enabled via `air` — editing `.go` files in `server/` triggers automatic rebuilds.
 
 ### Build the server image
 
@@ -58,11 +60,12 @@ docker build -f server/Dockerfile . -t folio-md-server:latest
 | `cli/Dockerfile`             | Extends `pandoc/extra:3.9.0.2-debian`; installs fonts; bakes in `entrypoint.sh`                                                    |
 | `cli/entrypoint.sh`          | Runs `pandoc` with `lualatex` and `style.tex` — no flags needed at runtime                                                          |
 | `cli/build_image.sh`         | Wrapper around `docker build` for the CLI image                                                                                     |
-| `server/server.py`           | FastAPI app; single `POST /convert` endpoint; calls pandoc as subprocess; returns PDF binary                                        |
-| `server/Dockerfile`          | Extends `pandoc/extra:3.9.0.2-debian`; adds uv + Python deps; runs uvicorn                                                         |
-| `server/docker-compose.yml`  | Local dev setup; mounts `server.py` for hot reload via `--reload`                                                                   |
-| `server/pyproject.toml`      | Pinned Python dependencies managed by uv                                                                                            |
-| `.devcontainer/devcontainer.json` | Opens VS Code inside the server container for IDE support without local Python                                                 |
+| `server/main.go`             | Go stdlib HTTP server; single `POST /convert` endpoint; calls pandoc as subprocess; returns PDF binary                              |
+| `server/go.mod`              | Go module file (no third-party deps; stdlib only)                                                                                   |
+| `server/Dockerfile`          | Multi-stage: `build` (golang:1.23) compiles the binary, `runtime` copies it into `pandoc/extra:3.9.0.2-debian`, `dev` adds Go + air |
+| `server/docker-compose.yml`  | Local dev setup; targets the `dev` stage with air for hot reload on port 8081                           |
+| `server/.air.toml`           | air config: watches `.go` files, rebuilds in `tmp/`, auto-restarts                                    |
+| `.devcontainer/devcontainer.json` | Opens VS Code inside the server container for Go IDE support without local Go toolchain                                         |
 | `.claude/commands/to-pdf.md` | Claude Code slash command (`/to-pdf <file>`) that wraps the CLI docker run invocation                                               |
 
-Style changes go in `style.tex`. CLI runtime behavior lives in `cli/entrypoint.sh`. Server logic lives in `server/server.py`. Dependency changes (fonts, TeX packages) go in the respective `Dockerfile`.
+Style changes go in `style.tex`. CLI runtime behavior lives in `cli/entrypoint.sh`. Server logic lives in `server/main.go`. Dependency changes (fonts, TeX packages) go in the respective `Dockerfile`.

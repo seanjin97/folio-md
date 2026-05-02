@@ -114,8 +114,8 @@ docker build -f server/Dockerfile . -t folio-md-server:latest
 | `style.tex` | LaTeX preamble baked into both images; controls fonts, page layout, colors, typography, headings, links, code blocks, and blockquotes |
 | `cli/Dockerfile` | Extends `pandoc/extra`; installs fonts; bakes in `entrypoint.sh` |
 | `cli/entrypoint.sh` | Runs Pandoc with `lualatex` and `style.tex` — no flags needed at runtime |
-| `server/server.py` | FastAPI app; single `POST /convert` endpoint; calls pandoc as subprocess; returns PDF binary |
-| `server/Dockerfile` | Extends `pandoc/extra`; adds uv + Python deps; overrides entrypoint to run uvicorn |
+| `server/main.go` | Go stdlib HTTP server; single `POST /convert` endpoint; calls pandoc as subprocess; returns PDF binary |
+| `server/Dockerfile` | Multi-stage: builds the Go binary, then copies it into a `pandoc/extra` runtime image |
 
 ## License
 
